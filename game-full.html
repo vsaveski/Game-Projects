@@ -1,0 +1,75 @@
+<!doctype html>
+<html>
+
+<!doctype html>
+<html>
+       <head>
+        <title>Guess my Color - Game VS</title>
+        </head>
+
+       
+    <body onload="runGame()">
+        <script>
+        var targetColor;
+        var guessColor;
+        var guessIndex;
+        var targetIndex;
+
+        var gameFinished = false;
+        var guessCount = 1;
+
+        var colorOptions = ["blue", "green", "orange", "red",  "yellow", "white", "black"]
+        function runGame() {
+
+            // Random number from 0-5
+            targetIndex = Math.floor(Math.random() * 6);
+            targetColor = colorOptions[targetIndex];
+            
+            // Wait jic
+            while(targetColor == undefined);
+            
+            
+            var guessIndex;
+            while(!gameFinished)
+            {
+                guessColor = prompt(
+                    "Thinking of one of these colors:\n\n" +
+                    colorOptions.join() + "\n\n" +
+                    "What color am I thinking of?"
+                );
+
+                guessIndex = colorOptions.indexOf(guessColor);
+                gameFinished = check_guess(guessIndex);
+            }
+        }
+
+        function check_guess(guessIndex)
+        {
+            // First, is it right?
+            if(targetIndex == guessIndex)
+            {
+                document.body.style.backgroundColor = targetColor;
+                alert("Congratulations! You got it right!\n\nIt took you " + guessCount 
+                      + " guesses!\n\nSee the color behind me!");
+                return true;
+            }
+            else if(guessIndex == -1) // Not even valid
+            {
+                alert("Sorry, I don't recognize your color.\n\nPlease try again.");
+                guessCount++;
+            }
+            else // In here, but not right
+            {
+                var before = targetIndex > guessIndex;
+                alert("Sorry, your guess is incorrect!\n\n" 
+                    + "Hint: your color is alphabetically " 
+                    + (before? "before" : "after") + " than mine.\n\n" 
+                     + "Please try again.");
+                guessCount++;
+            }
+            return false;
+        }
+
+        </script>
+    </body>
+</html>
